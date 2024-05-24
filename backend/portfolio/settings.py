@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     
     #installed:
     'rest_framework',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'portfolio.urls'
@@ -141,3 +143,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #overiding the default user for django
 AUTH_USER_MODEL = 'portfolio_app.User'
+
+# allow all frontend ports to access the backend routes
+CORS_ORIGIN_ALLOW_ALL = True
+# allow frontend to get the cookie
+CORS_ALLOW_CREDENTIALS = True
