@@ -69,6 +69,11 @@ class AboutViewSet(viewsets.ModelViewSet):
     serializer_class = AboutSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    def get_queryset(self):
+        # Return About objects ordered by date in descending order
+        return About.objects.all().order_by('-date')
+
+    
     def perform_create(self, serializer):
         user = self.request.user
         

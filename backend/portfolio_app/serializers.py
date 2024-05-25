@@ -59,5 +59,5 @@ class AboutSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True) #nested user serializer
     class Meta:
         model = About
-        fields = ['id', 'user', 'date', 'description']
+        fields = ['id', 'user', 'date', 'title', 'description']
 

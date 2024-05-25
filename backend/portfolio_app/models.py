@@ -19,6 +19,7 @@ class About(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateField() # This will store MM/YYYY in a date format
     description = models.TextField()
+    title = models.CharField(max_length=512, default='Default Title')
 
     def __str__(self):
         return f"{self.user.email} - {self.date.strftime('%B %Y')}"
