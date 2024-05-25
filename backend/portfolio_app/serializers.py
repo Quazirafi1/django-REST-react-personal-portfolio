@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, About
+from .models import User, About, SkillCategory, Skill
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError as DjangoValidationError
 import re
@@ -60,4 +60,24 @@ class AboutSerializer(serializers.ModelSerializer):
     class Meta:
         model = About
         fields = ['id', 'user', 'date', 'title', 'description']
+        
+    
+class SkillCategorySerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True) 
+    
+    class Meta:
+        model = SkillCategory
+        fields = ['id', 'user', 'category_name']
+        
+class SkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Skill
+        fields = ['id', 'skill', 'skill_category']
+        
+class GroupedSkillSerializer(serializers.Serializer):
+    skill_category_id = serializers.IntegerField(source='id')
+    skill_category_name = serializers.CharField(source='category_name')
+    skills = SkillSerializer(many=True)
 
+    class Meta:
+        fields = ['skill_category_id', 'skill_category_name', 'skills']

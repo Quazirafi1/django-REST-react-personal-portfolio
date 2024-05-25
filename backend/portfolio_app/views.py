@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .serializers import UserSerializer, AboutSerializer
+from .serializers import UserSerializer, AboutSerializer, SkillCategorySerializer, SkillSerializer, GroupedSkillSerializer
 from rest_framework.response import Response
-from .models import User, About
+from .models import User, About, SkillCategory, Skill
 from rest_framework import status, viewsets
 from rest_framework.exceptions import AuthenticationFailed
 import jwt, datetime
@@ -76,7 +76,6 @@ class AboutViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         user = self.request.user
-        
         serializer.save(user=user)
         
     def create(self, request, *args, **kwargs):
@@ -85,3 +84,44 @@ class AboutViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+class SkillCategoryViewSet(viewsets.ModelViewSet):
+    queryset = SkillCategory.objects.all()
+    serializer_class = SkillCategorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
+    def perform_create(self, serializer):
+        user = self.request.user
+        serializer.save(user=user)
+        
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+class SkillViewSet(viewsets.ModelViewSet):
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
+    def list(self, request, *args, **kwargs):
+        # Fetch all SkillCategory objects and prefetch the related Skill objects for each category
+        # using the 'skills' related name defined in the Skill model. This helps in reducing the number
+        # of database queries when accessing related Skill objects for each SkillCategory.
+
+        queryset = SkillCategory.objects.prefetch_related('skills').all()
+        serializer = GroupedSkillSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def perform_create(self, serializer):
+        serializer.save()
+        
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    

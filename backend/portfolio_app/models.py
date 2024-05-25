@@ -24,3 +24,17 @@ class About(models.Model):
     def __str__(self):
         return f"{self.user.email} - {self.date.strftime('%B %Y')}"
 
+class SkillCategory(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    category_name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.user.email} - {self.category_name}"
+
+# related_name='skills': This attribute in the ForeignKey field specifies the name to use for the reverse relation from SkillCategory to Skill. This means that from a SkillCategory instance, you can access all related Skill instances using the skills attribute.    
+class Skill(models.Model):
+    skill_category = models.ForeignKey(SkillCategory, related_name='skills', on_delete=models.CASCADE)
+    skill = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.skill_category} - {self.skill}"
