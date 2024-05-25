@@ -148,3 +148,10 @@ AUTH_USER_MODEL = 'portfolio_app.User'
 CORS_ORIGIN_ALLOW_ALL = True
 # allow frontend to get the cookie
 CORS_ALLOW_CREDENTIALS = True
+
+# for custom authentication that handles token retrieval from cookies
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'portfolio_app.authentication.JWTAuthentication',  
+    ]
+}

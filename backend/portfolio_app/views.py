@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .serializers import UserSerializer
+from .serializers import UserSerializer, AboutSerializer
 from rest_framework.response import Response
-from .models import User
-from rest_framework import status
+from .models import User, About
+from rest_framework import status, viewsets
 from rest_framework.exceptions import AuthenticationFailed
 import jwt, datetime
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 class RegisterView(APIView):
     def post(self, request):
@@ -52,26 +53,6 @@ class LoginView(APIView):
         }
         
         return response 
-
-
-class UserView(APIView):
-    def get(self, request):
-        token = request.COOKIES.get('jwt')
-        
-        if not token:
-            raise AuthenticationFailed({'Error': 'Unauthenticated'})
-        
-        try:
-            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
-        except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed({'Error': 'Unauthenticated'})
-        except jwt.ImmatureSignatureError:
-            raise AuthenticationFailed({'Error': 'Token is not yet valid (iat)'})
-    
-        user = User.objects.filter(id=payload['id']).first()
-        # since user ain't JSON serializable 
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
     
 class LogoutView(APIView):
     def post(self, request):
@@ -82,3 +63,20 @@ class LogoutView(APIView):
         }
         
         return response
+    
+class AboutViewSet(viewsets.ModelViewSet):
+    queryset = About.objects.all()
+    serializer_class = AboutSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        
+        serializer.save(user=user)
+        
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

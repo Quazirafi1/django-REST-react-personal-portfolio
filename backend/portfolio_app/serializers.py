@@ -1,9 +1,21 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, About
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError as DjangoValidationError
 import re
+from datetime import datetime
 
+class CustomDateField(serializers.DateField):
+    def to_internal_value(self, value):
+        # Expecting "MM/YYYY"
+        try:
+            return datetime.strptime(value, '%m/%Y').date()
+        except ValueError:
+            raise serializers.ValidationError("Date format must be MM/YYYY")
+    
+    def to_representation(self, value):
+        # Format date as MM/YYYY
+        return value.strftime('%m/%Y')
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,3 +53,11 @@ class UserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
+class AboutSerializer(serializers.ModelSerializer):
+    date = CustomDateField()
+    user = UserSerializer(read_only=True) #nested user serializer
+    class Meta:
+        model = About
+        fields = ['id', 'user', 'date', 'description']
+
