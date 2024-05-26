@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, About, SkillCategory, Skill, Sustainability
+from .models import User, About, SkillCategory, Skill, Sustainability, Contact
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError as DjangoValidationError
 import re
@@ -88,4 +88,35 @@ class SustainabilitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Sustainability
         fields = ['id', 'user', 'sustainability_title', 'sustainability_description']
+
+class SocialsSerializer(serializers.Serializer):
+    email = serializers.CharField(max_length=255, required=False, allow_null=True)
+    linkedin = serializers.CharField(max_length=2048, required=False, allow_null=True)
+    github = serializers.CharField(max_length=2048, required=False, allow_null=True)    
+   
+class ContactSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True) 
+    #Nested Serializer (SocialsSerializer) handles the nested structure of socials.
+    socials = SocialsSerializer(write_only=True)
+    socials_data = SocialsSerializer(source='*', read_only=True)
+
+
+    class Meta:
+        model = Contact
+        fields = ['id', 'user', 'contact_description', 'socials','socials_data']
+        
+    def create(self, validated_data):
+        # extract the 'socials' key from the validated_data dictionary
+        # if the key does not exist, it returns an empty dictionary {} 
+        socials_data = validated_data.pop('socials', {})
+        contact = Contact.objects.create(
+            #self.context['request'] gives access to the current request object, 
+            # and .user retrieves the authenticated user
+            user=self.context['request'].user,
+            contact_description=validated_data['contact_description'],
+            email=socials_data.get('email'),
+            linkedin=socials_data.get('linkedin'),
+            github=socials_data.get('github')
+        )
+        return contact
 

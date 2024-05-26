@@ -48,3 +48,13 @@ class Sustainability(models.Model):
     
     def __str__(self):
         return f"{self.sustainability_title}"
+    
+class Contact(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    contact_description = models.TextField()
+    email = models.CharField(max_length=255, null=True)
+    linkedin = models.CharField(max_length=2048, null=True)
+    github = models.CharField(max_length=2048, null=True)
+    
+    def __str__(self):
+        return f"{self.email}-{self.linkedin}-{self.github}"
