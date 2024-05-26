@@ -2,7 +2,7 @@ import profilePic from "../assets/quaziProfilePic.jpeg";
 
 const Hero = () => {
   return (
-    <div className="border-b border-neutral-700 pb-4 lg:mb-35 bg-black text-white">
+    <div className="border-b border-black pb-4 lg:mb-35 bg-black text-white">
       <div className="flex flex-wrap">
         <div className="w-full lg:w-1/2">
           <div className="flex flex-col items-center lg:items-start">
