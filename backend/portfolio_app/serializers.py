@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, About, SkillCategory, Skill
+from .models import User, About, SkillCategory, Skill, Sustainability
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError as DjangoValidationError
 import re
@@ -81,3 +81,11 @@ class GroupedSkillSerializer(serializers.Serializer):
 
     class Meta:
         fields = ['skill_category_id', 'skill_category_name', 'skills']
+        
+class SustainabilitySerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True) 
+    
+    class Meta:
+        model = Sustainability
+        fields = ['id', 'user', 'sustainability_title', 'sustainability_description']
+

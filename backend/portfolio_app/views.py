@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .serializers import UserSerializer, AboutSerializer, SkillCategorySerializer, SkillSerializer, GroupedSkillSerializer
+from .serializers import UserSerializer, AboutSerializer, SkillCategorySerializer, SkillSerializer, GroupedSkillSerializer, SustainabilitySerializer
 from rest_framework.response import Response
-from .models import User, About, SkillCategory, Skill
+from .models import User, About, SkillCategory, Skill, Sustainability
 from rest_framework import status, viewsets
 from rest_framework.exceptions import AuthenticationFailed
 import jwt, datetime
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.decorators import action
+
 
 class RegisterView(APIView):
     def post(self, request):
@@ -124,4 +126,30 @@ class SkillViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+class SustainabilityViewSet(viewsets.ModelViewSet):
+    queryset = Sustainability.objects.all()
+    serializer_class = SustainabilitySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
+    def perform_create(self, serializer):
+        user = self.request.user
+        serializer.save(user=user)
+        
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+    #Removing request from the method signature will lead to errors
+    @action(detail=False, methods=['get'], url_path='latest', url_name='latest')
+    def latest(self, request):
+        latest_entry = self.get_queryset().order_by('-id').first()
+        if latest_entry:
+            serializer = self.get_serializer(latest_entry)
+            return Response(serializer.data)
+        else:
+            return Response({'detail': 'No entries found.'}, status=status.HTTP_404_NOT_FOUND)
     
