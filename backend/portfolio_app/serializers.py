@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, About, SkillCategory, Skill, Sustainability, Contact
+from .models import User, About, SkillCategory, Skill, Sustainability, Contact, Hero
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError as DjangoValidationError
 import re
@@ -119,4 +119,11 @@ class ContactSerializer(serializers.ModelSerializer):
             github=socials_data.get('github')
         )
         return contact
+
+class HeroSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True) 
+    
+    class Meta:
+        model = Hero
+        fields = ['id', 'user', 'hero_title', 'hero_description']
 

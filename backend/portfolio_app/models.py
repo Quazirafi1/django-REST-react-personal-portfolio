@@ -58,3 +58,11 @@ class Contact(models.Model):
     
     def __str__(self):
         return f"{self.email}-{self.linkedin}-{self.github}"
+    
+class Hero(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    hero_title = models.CharField(max_length=255, null=True)
+    hero_description = models.TextField()
+    
+    def __str__(self):
+        return f"{self.sustainability_title}"

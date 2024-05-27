@@ -1,6 +1,6 @@
 from django.urls import path, include
 from . views import RegisterView, LoginView, LogoutView, AboutViewSet, SkillCategoryViewSet
-from . views import SkillViewSet, SustainabilityViewSet, ContactViewSet
+from . views import SkillViewSet, SustainabilityViewSet, ContactViewSet, HeroViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -9,6 +9,7 @@ router.register(r'skill-category', SkillCategoryViewSet, basename='skill-categor
 router.register(r'skill', SkillViewSet, basename='skill')
 router.register(r'sustainability', SustainabilityViewSet, basename='sustainability')
 router.register(r'contact', ContactViewSet, basename='contact')
+router.register(r'hero', HeroViewSet, basename='hero')
 
 urlpatterns = [
     path('register/', RegisterView.as_view()),
@@ -16,7 +17,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view()),
     path('', include(router.urls)),
 ]
-
 
 ###########################################Notes#######################################
 # request body for contact POST:
