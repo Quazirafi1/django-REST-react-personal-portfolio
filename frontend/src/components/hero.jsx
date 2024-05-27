@@ -2,14 +2,14 @@ import profilePic from "../assets/quaziProfilePic.jpeg";
 
 const Hero = () => {
   return (
-    <div className="border-b border-black pb-4 lg:mb-35 bg-black text-white">
+    <div id="home" className="border-b border-black pb-4 lg:mb-35 bg-black text-white">
       <div className="flex flex-wrap">
         <div className="w-full lg:w-1/2">
           <div className="flex flex-col items-center lg:items-start">
             <h1 className="pb-16 text-5xl font-thin tracking-tight lg:mt-16 lg:text-7xl md:text-5xl">
               Quazi Ghulam Rafi
             </h1>
-            <span className="text-4xl tracking-tight text-neutral-300">
+            <span className="text-3xl tracking-tight text-neutral-300">
               Software Engineer
             </span>
             <p className="my-2 max-w-xl py-6 font-light tracking-tighter text-neutral-200 text-justify text-lg">

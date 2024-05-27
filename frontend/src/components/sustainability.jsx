@@ -2,7 +2,7 @@ import { SiGreensock } from "react-icons/si";
 
 const Sustainability = () => {
   return (
-    <div className="border-b border-black pb-4 bg-black text-white">
+    <div id="sustainability" className="border-b border-black pb-4 bg-black text-white">
       <h2 className="my-20 text-center text-4xl flex items-center justify-center">
         Sustainability <SiGreensock className="ml-2" />
       </h2>

@@ -15,3 +15,7 @@ body {
   padding: 0;
   color: white; /* Optional: Set text color to white for better visibility */
 }
+
+html {
+  scroll-behavior: smooth;
+}
