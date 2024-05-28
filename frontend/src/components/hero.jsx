@@ -1,6 +1,29 @@
+import React, { useEffect, useState } from 'react'; // Importing necessary hooks from React
+import axios from 'axios';  // Importing axios for making HTTP requests
 import profilePic from "../assets/quaziProfilePic.jpeg";
 
 const Hero = () => {
+  // useState hook to manage the state of heroData, initialized to null
+  const [heroData, setHeroData] = useState(null);
+  
+  // useEffect hook to perform side effects, in this case, fetching data when the component mounts
+  useEffect(() => {
+    const fetchHeroData = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/hero/latest/');
+        setHeroData(response.data);
+      } catch (error) {
+        console.error('Error fetching hero data:', error);
+      }
+    };
+    // Calling the fetchHeroData function
+    fetchHeroData(); 
+  }, []); // Empty dependency array ensures this effect runs only once after the initial render
+
+  if (!heroData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div id="home" className="border-b border-black pb-4 lg:mb-35 bg-black text-white">
       <div className="flex flex-wrap">
@@ -10,10 +33,10 @@ const Hero = () => {
               Quazi Ghulam Rafi
             </h1>
             <span className="text-3xl tracking-tight text-neutral-300">
-              Software Engineer
+                {heroData.hero_title}
             </span>
             <p className="my-2 max-w-xl py-6 font-light tracking-tighter text-neutral-200 text-justify text-lg">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                {heroData.hero_description}
             </p>
           </div>
         </div>

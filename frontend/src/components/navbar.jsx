@@ -2,7 +2,7 @@ import React from 'react';
 import logo from "../assets/quaziLogo.png";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 
-const Navbar = () => {
+const Navbar = ({ contactData }) => {
   return (
     <nav className="mb-20 flex items-center justify-between py-6 bg-black text-white">
       <div className="flex items-center">
@@ -15,10 +15,10 @@ const Navbar = () => {
         <a href="#sustainability" className="hover:text-gray-400">Sustainability</a>
         <a href="#contact" className="hover:text-gray-400">Contact</a>
         <div className="flex items-center gap-4 text-2xl">
-          <a href="https://www.linkedin.com/in/your-linkedin/" target="_blank" rel="noopener noreferrer">
+          <a href={contactData.socials_data.linkedin} target="_blank" rel="noopener noreferrer">
             <FaLinkedin />
           </a>
-          <a href="https://github.com/your-github" target="_blank" rel="noopener noreferrer">
+          <a href={contactData.socials_data.github} target="_blank" rel="noopener noreferrer">
             <FaGithub />
           </a>
         </div>
