@@ -35,7 +35,7 @@ const App = () => {
         <Hero/>
         <About/>
         <Skill/>
-        <Sustainability/>
+        <Sustainability contactData={contactData}/>
         <Contact contactData={contactData}/>
       </div>
     </div>

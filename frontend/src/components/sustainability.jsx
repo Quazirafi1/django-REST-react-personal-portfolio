@@ -2,7 +2,7 @@ import { SiGreensock } from "react-icons/si";
 import React, { useEffect, useState } from 'react'; // Importing necessary hooks from React
 import axios from 'axios';  // Importing axios for making HTTP requests
 
-const Sustainability = () => {
+const Sustainability = ({ contactData }) => {
     const [sustainabilityData, setSustainabilityData] = useState(null);
   
     useEffect(() => {
@@ -37,9 +37,14 @@ const Sustainability = () => {
           </h4>
         </div>
         <div className="w-full flex justify-center mt-12">
-          <button className="px-6 py-2 bg-neutral-600 text-white font-semibold rounded-full hover:bg-neutral-800 transition duration-300">
-            Let's Make Sustainable Solutions Together
-          </button>
+            <a 
+                href={contactData.socials_data.linkedin} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="px-6 py-2 bg-neutral-600 text-white font-semibold rounded-full hover:bg-neutral-800 transition duration-300"
+            >
+                Let's Make Sustainable Solutions Together
+            </a>
         </div>
       </div>
     </div>
