@@ -1,6 +1,6 @@
 import { SiGreensock } from "react-icons/si";
-import React, { useEffect, useState } from 'react'; // Importing necessary hooks from React
-import axios from 'axios';  // Importing axios for making HTTP requests
+import React, { useEffect, useState } from 'react'; 
+import axios from 'axios';
 
 const Sustainability = ({ contactData }) => {
     const [sustainabilityData, setSustainabilityData] = useState(null);
