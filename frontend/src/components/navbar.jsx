@@ -9,11 +9,11 @@ const Navbar = ({ contactData }) => {
         <img className="w-16" src={logo} alt="logo"/>
       </div>
       <div className="flex items-center gap-8 text-xl">
-        <a href="#home" className="hover:text-gray-400">Home</a>
-        <a href="#about" className="hover:text-gray-400">About</a>
-        <a href="#skills" className="hover:text-gray-400">Skills</a>
-        <a href="#sustainability" className="hover:text-gray-400">Sustainability</a>
-        <a href="#contact" className="hover:text-gray-400">Contact</a>
+        <a href="#home" className="hover:text-gray-400 md:block hidden">Home</a>
+        <a href="#about" className="hover:text-gray-400 md:block hidden">About</a>
+        <a href="#skills" className="hover:text-gray-400 md:block hidden">Skills</a>
+        <a href="#sustainability" className="hover:text-gray-400 md:block hidden">Sustainability</a>
+        <a href="#contact" className="hover:text-gray-400 md:block hidden">Contact</a>
         <div className="flex items-center gap-4 text-2xl">
           <a href={contactData.socials_data.linkedin} target="_blank" rel="noopener noreferrer">
             <FaLinkedin />
