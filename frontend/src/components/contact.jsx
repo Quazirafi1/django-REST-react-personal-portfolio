@@ -3,7 +3,7 @@ import { FaEnvelope, FaLinkedin, FaGithub } from 'react-icons/fa';
 const Contact = ({ contactData }) => {
   return (
     <div id="contact" className="border-b border-black pb-20">
-      <h1 className="my-10 text-center text-4xl">Get In Touch</h1>
+      <h1 className="my-20 text-center text-4xl flex items-center justify-center">Get In Touch</h1>
       <div className="text-center tracking-tighter">
         <p className="my-4 text-neutral-400">
           {contactData.contact_description}
