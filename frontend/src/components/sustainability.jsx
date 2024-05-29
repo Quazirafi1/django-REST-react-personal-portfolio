@@ -1,6 +1,26 @@
 import { SiGreensock } from "react-icons/si";
+import React, { useEffect, useState } from 'react'; // Importing necessary hooks from React
+import axios from 'axios';  // Importing axios for making HTTP requests
 
 const Sustainability = () => {
+    const [sustainabilityData, setSustainabilityData] = useState(null);
+  
+    useEffect(() => {
+      const fetchSustainabilityData = async () => {
+        try {
+          const response = await axios.get('http://127.0.0.1:8000/api/sustainability/latest/');
+          setSustainabilityData(response.data);
+        } catch (error) {
+          console.error('Error fetching sustainability data:', error);
+        }
+      };
+      fetchSustainabilityData(); 
+    }, []);
+  
+    if (!sustainabilityData) {
+      return <div>Loading...</div>;
+    }
+  
   return (
     <div id="sustainability" className="border-b border-black pb-4 bg-black text-white">
       <h2 className="my-20 text-center text-4xl flex items-center justify-center">
@@ -8,9 +28,9 @@ const Sustainability = () => {
       </h2>
       <div className="flex flex-wrap justify-center">
         <div className="w-full lg:w-2/3 lg:p-8">
-          <h3 className="text-3xl font-semi-bold mb-4 text-neutral-200 text-justify">Did you know there is sustainability in and by software?</h3>
+          <h3 className="text-3xl font-semi-bold mb-4 text-neutral-200 text-justify">{sustainabilityData.sustainability_title}</h3>
           <p className="text-xl mb-4 text-justify">
-            My expertise at the intersection of software and sustainability can help your solution to be more sustainable. My expertise at the intersection of software and sustainability can help your solution to be more sustainable. My expertise at the intersection of software and sustainability can help your solution to be more sustainable.
+            {sustainabilityData.sustainability_description}
           </p>
           <h4 className="text-lg italic text-neutral-400">
             **This website is intentionally monochromatic for sustainability purposes
@@ -18,7 +38,7 @@ const Sustainability = () => {
         </div>
         <div className="w-full flex justify-center mt-12">
           <button className="px-6 py-2 bg-neutral-600 text-white font-semibold rounded-full hover:bg-neutral-800 transition duration-300">
-            Feel Free to Contact Me For More Details 
+            Let's Make Sustainable Solutions Together
           </button>
         </div>
       </div>

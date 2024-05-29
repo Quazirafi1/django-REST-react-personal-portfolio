@@ -16,11 +16,11 @@ const Contact = ({ contactData }) => {
         </a>
         <a href={contactData.socials_data.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-neutral-400">
           <FaLinkedin className="text-2xl" />
-          <span>Check out My LinkedIn!</span>
+          <span>LinkedIn</span>
         </a>
         <a href={contactData.socials_data.github} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-neutral-400">
           <FaGithub className="text-2xl" />
-          <span>Check out My GitHub!</span>
+          <span>GitHub</span>
         </a>
       </div>
     </div>
