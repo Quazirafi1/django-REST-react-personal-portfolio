@@ -10,7 +10,7 @@ const Hero = () => {
   useEffect(() => {
     const fetchHeroData = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/hero/latest/');
+        const response = await axios.get('http://localhost:8000/api/hero/latest/');
         setHeroData(response.data);
       } catch (error) {
         console.error('Error fetching hero data:', error);
@@ -29,7 +29,7 @@ const Hero = () => {
       <div className="flex flex-wrap">
         <div className="w-full lg:w-1/2">
           <div className="flex flex-col items-center lg:items-start">
-            <h1 className="pb-16 text-5xl font-thin tracking-tight lg:mt-16 lg:text-7xl md:text-5xl">
+            <h1 className="pb-16 text-4xl font-thin tracking-tight lg:mt-16 lg:text-7xl md:text-5xl">
               Quazi Ghulam Rafi
             </h1>
             <span className="text-3xl tracking-tight text-neutral-300">

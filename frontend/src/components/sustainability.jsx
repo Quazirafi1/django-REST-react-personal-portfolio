@@ -41,7 +41,7 @@ const Sustainability = ({ contactData }) => {
                 href={contactData.socials_data.linkedin} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="px-6 py-2 bg-neutral-600 text-white font-semibold rounded-full hover:bg-neutral-800 transition duration-300"
+                className="px-6 py-2 bg-neutral-600 text-white font-semibold rounded-full hover:bg-neutral-800 text-center transition duration-300"
             >
                 Let's Make Sustainable Solutions Together
             </a>
