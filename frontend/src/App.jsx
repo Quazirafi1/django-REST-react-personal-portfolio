@@ -13,7 +13,7 @@ const App = () => {
   useEffect(() => {
     const fetchContactData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/contact/latest/');
+        const response = await axios.get('https://quazirafi.online/api/contact/latest/');
         setContactData(response.data);
       } catch (error) {
         console.error('Error fetching contact data:', error);

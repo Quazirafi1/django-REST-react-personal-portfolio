@@ -7,7 +7,7 @@ const Skill = () => {
     useEffect(() => {
         const fetchSkillData = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/skill/');
+                const response = await axios.get('https://quazirafi.online/api/skill/');
                 setSkillData(response.data);
             } catch (error) {
                 console.error('Error fetching skill data:', error);

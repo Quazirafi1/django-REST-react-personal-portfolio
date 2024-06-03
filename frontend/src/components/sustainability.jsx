@@ -8,7 +8,7 @@ const Sustainability = ({ contactData }) => {
     useEffect(() => {
       const fetchSustainabilityData = async () => {
         try {
-          const response = await axios.get('http://127.0.0.1:8000/api/sustainability/latest/');
+          const response = await axios.get('https://quazirafi.online/api/sustainability/latest/');
           setSustainabilityData(response.data);
         } catch (error) {
           console.error('Error fetching sustainability data:', error);
