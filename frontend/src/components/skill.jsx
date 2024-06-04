@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const Skill = () => {
+const Skill = ({ contactData }) => {
     const [skillData, setSkillData] = useState(null);
 
     useEffect(() => {
@@ -37,10 +37,15 @@ const Skill = () => {
                             </div>
                         ))}
                     </div>
-                    <div className="flex justify-center mt-12">
-                        <button className="px-6 py-2 bg-neutral-600 text-white font-semibold rounded-full hover:bg-neutral-800 transition duration-300">
+                    <div className="w-full flex justify-center mt-12">
+                        <a 
+                            href={contactData.socials_data.github} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="px-6 py-2 bg-neutral-600 text-white font-semibold rounded-full hover:bg-neutral-800 text-center transition duration-300"
+                        >
                             Explore Some of My Projects
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>

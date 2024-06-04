@@ -34,7 +34,7 @@ const App = () => {
         <Navbar contactData={contactData}/>
         <Hero/>
         <About/>
-        <Skill/>
+        <Skill contactData={contactData}/>
         <Sustainability contactData={contactData}/>
         <Contact contactData={contactData}/>
       </div>
